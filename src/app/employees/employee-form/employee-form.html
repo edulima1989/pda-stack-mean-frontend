@@ -1,0 +1,52 @@
+<section class="card">
+  <h2>{{ isEdit ? 'Editar empleado' : 'Nuevo empleado' }}</h2>
+
+  @if (error()) {
+    <div class="alert alert-error">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <p>Cargando...</p>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" type="text" formControlName="nombre" [class.invalid]="isInvalid('nombre')" />
+        @if (isInvalid('nombre')) {
+          <span class="error-text">El nombre es obligatorio</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="cargo">Cargo</label>
+        <input id="cargo" type="text" formControlName="cargo" [class.invalid]="isInvalid('cargo')" />
+        @if (isInvalid('cargo')) {
+          <span class="error-text">El cargo es obligatorio</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="departamento">Departamento</label>
+        <input id="departamento" type="text" formControlName="departamento" [class.invalid]="isInvalid('departamento')" />
+        @if (isInvalid('departamento')) {
+          <span class="error-text">El departamento es obligatorio</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="sueldo">Sueldo</label>
+        <input id="sueldo" type="number" step="0.01" min="0" formControlName="sueldo" [class.invalid]="isInvalid('sueldo')" />
+        @if (isInvalid('sueldo')) {
+          <span class="error-text">El sueldo debe ser mayor que cero</span>
+        }
+      </div>
+
+      <div class="actions">
+        <button class="btn" type="submit" [disabled]="saving()">
+          {{ saving() ? 'Guardando...' : 'Guardar' }}
+        </button>
+        <a class="btn btn-secondary" routerLink="/empleados">Cancelar</a>
+      </div>
+    </form>
+  }
+</section>
